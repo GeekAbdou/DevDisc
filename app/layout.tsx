@@ -24,7 +24,6 @@ export const metadata: Metadata = {
   icons: '/assets/images/site-logo.svg'
 };
 
-
 export default function RootLayout({
   children
 }: {
