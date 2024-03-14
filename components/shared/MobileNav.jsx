@@ -8,13 +8,12 @@ import { sidebarLinks } from '@/constants';
 import { usePathname } from 'next/navigation';
 
 import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetTrigger
-  } from '@/components/ui/sheet';
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
-  
 const NavContent = () => {
   const pathname = usePathname();
   return (

@@ -29,11 +29,11 @@ const Navbar = () => {
             afterSignOutUrl="/"
             appearance={{
               elements: {
-                avatarBox: 'h-10 w-10'
+                avatarBox: 'h-10 w-10',
               },
               variables: {
-                colorPrimary: '#ff7000'
-              }
+                colorPrimary: '#ff7000',
+              },
             }}
           />
         </SignedIn>

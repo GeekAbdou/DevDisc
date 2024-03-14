@@ -4,7 +4,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetTrigger
+  SheetTrigger,
 } from '@/components/ui/sheet';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -99,8 +99,6 @@ const MobileNav = () => {
               </SheetClose>
             </div>
           </SignedOut>
-
-           
         </div>
       </SheetContent>
     </Sheet>

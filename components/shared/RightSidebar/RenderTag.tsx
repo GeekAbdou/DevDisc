@@ -14,7 +14,7 @@ const RenderTag = ({
   _id,
   name,
   totalQuestions,
-  showCount
+  showCount,
 }: RenderTagProps) => {
   return (
     <Link href={`/tags/${_id}`} className="flex justify-between gap-3">
