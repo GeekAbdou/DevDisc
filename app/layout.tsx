@@ -18,7 +18,7 @@ const spaceGrotest = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'DevFlow',
+  title: 'DevDisc',
   description:
     'A community driven platform for developers asking and answering questions.Get help and answers to your questions about anything related to programming and software development from the best developers on the internet.',
   icons: '/assets/images/site-logo.svg',

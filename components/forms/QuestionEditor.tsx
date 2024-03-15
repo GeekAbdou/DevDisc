@@ -1,11 +1,6 @@
 'use client';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
-import { Button } from '@/components/ui/button';
+import React, { useRef } from 'react';
 import {
-  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -13,55 +8,72 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { questionsSchema } from '@/lib/validation';
+import { Editor } from '@tinymce/tinymce-react';
+import { useFormContext } from 'react-hook-form';
 
-function onSubmit(values: z.infer<typeof questionsSchema>) {
-  console.log(values);
-}
-
-export default function Questions() {
-  const form = useForm<z.infer<typeof questionsSchema>>({
-    resolver: zodResolver(questionsSchema),
-    defaultValues: {
-      title: '',
-      explanation: '',
-      tags: '',
-    },
-  });
+export const QuestionEditor = () => {
+  const { control } = useFormContext();
+  const editorRef = useRef(null);
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="paragraph-semibold text-dark400_light800">
-                Question Title <span className="text-primary-500">*</span>
-              </FormLabel>
+    <FormField
+      control={control}
+      name="explanation"
+      render={({ field }) => (
+        <FormItem className="flex w-full flex-col gap-3">
+          <FormLabel className="paragraph-semibold text-dark400_light800">
+            Detailed explanation of your problem{' '}
+            <span className="text-primary-500">*</span>
+          </FormLabel>
 
-              <FormControl className="mt-3.5 ">
-                <Input className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark400_light700 min-h-[56px] border" />
-              </FormControl>
+          <FormControl className="mt-3.5 ">
+            {/* //todo: add an editor component */}
+            <Editor
+              apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+              onBlur={field.onBlur}
+              onEditorChange={(content) => field.onChange(content)}
+              onInit={(evt, editor) => {
+                // @ts-ignore
+                editorRef.current = editor;
+              }}
+              initialValue=""
+              init={{
+                height: 350,
+                menubar: false,
+                plugins: [
+                  'advlist',
+                  'autolink',
+                  'lists',
+                  'link',
+                  'image',
+                  'charmap',
+                  'preview',
+                  'anchor',
+                  'searchreplace',
+                  'visualblocks',
+                  'codesample',
+                  'fullscreen',
+                  'insertdatetime',
+                  'media',
+                  'table',
+                ],
+                toolbar:
+                  'undo redo |  ' +
+                  'codesample | bold italic forecolor | alignleft aligncenter ' +
+                  'alignright alignjustify | bullist numlist ',
+                content_style: 'body { font-family:Inter; font-size:16px }',
+              }}
+            />
+          </FormControl>
 
-              <FormDescription className="body-regular mt-2.5 text-light-500">
-                Be specific and imagine you&apos;re asking a question to another
-                person.
-              </FormDescription>
+          <FormDescription className="body-regular mt-2.5 text-light-500">
+            Introduce the problem and expand on what you put in the title.
+            Minimum 20 characters.
+          </FormDescription>
 
-              <FormMessage className="text-red-500" />
-            </FormItem>
-          )}
-        />
-        <Button
-          className="primary-gradient rounded-lg text-light-900"
-          type="submit"
-        >
-          Submit
-        </Button>
-      </form>
-    </Form>
+          <FormMessage className="text-red-500" />
+        </FormItem>
+      )}
+    />
   );
-}
+};

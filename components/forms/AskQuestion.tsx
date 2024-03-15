@@ -4,17 +4,10 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
 import { questionsSchema } from '@/lib/validation';
+import { QuestionTitle } from './QuestionTitle';
+import { QuestionEditor } from './QuestionEditor';
 
 function onSubmit(values: z.infer<typeof questionsSchema>) {
   console.log(values);
@@ -33,28 +26,9 @@ export default function Questions() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="paragraph-semibold text-dark400_light800">
-                Question Title <span className="text-primary-500">*</span>
-              </FormLabel>
+        <QuestionTitle />
+        <QuestionEditor />
 
-              <FormControl className="mt-3.5 ">
-                <Input className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark400_light700 min-h-[56px] border" />
-              </FormControl>
-
-              <FormDescription className="body-regular mt-2.5 text-light-500">
-                Be specific and imagine you&apos;re asking a question to another
-                person.
-              </FormDescription>
-
-              <FormMessage className="text-red-500" />
-            </FormItem>
-          )}
-        />
         <Button
           className="primary-gradient rounded-lg text-light-900"
           type="submit"
