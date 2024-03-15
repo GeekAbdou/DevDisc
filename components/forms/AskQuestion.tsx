@@ -9,10 +9,8 @@ import { questionsSchema } from '@/lib/validation';
 import { QuestionTitle } from './QuestionTitle';
 import { QuestionEditor } from './QuestionEditor';
 import { QuestionTags } from './QuestionTags';
-
-function onSubmit(values: z.infer<typeof questionsSchema>) {
-  console.log(values);
-}
+import { useState } from 'react';
+import { createQuestion } from '@/lib/actions/question.action';
 
 export default function Questions() {
   const form = useForm<z.infer<typeof questionsSchema>>({
@@ -23,6 +21,22 @@ export default function Questions() {
       tags: '',
     },
   });
+  const type: any = 'create';
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  // 2. Define a submit handler.
+  async function onSubmit(values: z.infer<typeof questionsSchema>) {
+    setIsSubmitting(true);
+    console.log(values);
+    await createQuestion({});
+
+    try {
+    } catch (error) {
+      // handle error
+      console.log('error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <Form {...form}>
@@ -32,10 +46,15 @@ export default function Questions() {
         <QuestionTags />
 
         <Button
-          className="primary-gradient rounded-lg text-light-900"
+          className="primary-gradient w-fit !text-light-900"
           type="submit"
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? (
+            <>{type === 'edit' ? 'Editing...' : 'Posting'}</>
+          ) : (
+            <>{type === 'edit' ? 'Edit Queston' : 'Ask a question'}</>
+          )}
         </Button>
       </form>
     </Form>
