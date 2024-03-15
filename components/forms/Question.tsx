@@ -11,8 +11,13 @@ import { QuestionEditor } from './QuestionEditor';
 import { QuestionTags } from './QuestionTags';
 import { useState } from 'react';
 import { createQuestion } from '@/lib/actions/question.action';
+import { useRouter, usePathname } from 'next/navigation';
 
-export default function Questions() {
+interface QuestionProps {
+  mongoUserId: string;
+}
+
+export default function Question({ mongoUserId }: QuestionProps) {
   const form = useForm<z.infer<typeof questionsSchema>>({
     resolver: zodResolver(questionsSchema),
     defaultValues: {
@@ -21,17 +26,26 @@ export default function Questions() {
       tags: '',
     },
   });
+
   const type: any = 'create';
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // 2. Define a submit handler.
+  const router = useRouter();
+  const pathname = usePathname();
+
   async function onSubmit(values: z.infer<typeof questionsSchema>) {
     setIsSubmitting(true);
     console.log(values);
-    await createQuestion({});
 
     try {
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+        path: pathname,
+      });
+      //router.push('/');
     } catch (error) {
-      // handle error
       console.log('error:', error);
     } finally {
       setIsSubmitting(false);
