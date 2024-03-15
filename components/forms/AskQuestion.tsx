@@ -8,6 +8,7 @@ import { Form } from '@/components/ui/form';
 import { questionsSchema } from '@/lib/validation';
 import { QuestionTitle } from './QuestionTitle';
 import { QuestionEditor } from './QuestionEditor';
+import { QuestionTags } from './QuestionTags';
 
 function onSubmit(values: z.infer<typeof questionsSchema>) {
   console.log(values);
@@ -28,6 +29,7 @@ export default function Questions() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <QuestionTitle />
         <QuestionEditor />
+        <QuestionTags />
 
         <Button
           className="primary-gradient rounded-lg text-light-900"
