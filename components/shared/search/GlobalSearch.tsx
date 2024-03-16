@@ -1,12 +1,12 @@
-'use';
-import { ChangeEvent, useState } from 'react';
+'use client';
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 
 const GlobalSearch = () => {
   const [searchValue, setSearchValue] = useState('');
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: any) => {
     setSearchValue(e.target.value);
   };
 
