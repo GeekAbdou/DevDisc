@@ -23,7 +23,7 @@ export default function Question({ mongoUserId }: QuestionProps) {
     defaultValues: {
       title: '',
       explanation: '',
-      tags: '',
+      tags: [''],
     },
   });
 
@@ -44,7 +44,7 @@ export default function Question({ mongoUserId }: QuestionProps) {
         author: JSON.parse(mongoUserId),
         path: pathname,
       });
-      //router.push('/');
+      router.push('/');
     } catch (error) {
       console.log('error:', error);
     } finally {
