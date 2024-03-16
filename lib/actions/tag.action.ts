@@ -5,7 +5,7 @@ import { connectToDatabase } from '../db/mongoose';
 import {
   GetAllTagsParams,
   GetQuestionsByTagIdParams,
-  GetTopInteractedTagsParams
+  GetTopInteractedTagsParams,
 } from './shared.types';
 import Tag, { ITag } from '@/database/tag.model';
 import { FilterQuery } from 'mongoose';
@@ -13,7 +13,7 @@ import Question from '@/database/question.model';
 import Interaction from '@/database/interaction.model';
 
 export const getTopInteractedTags = async (
-  params: GetTopInteractedTagsParams
+  params: GetTopInteractedTagsParams,
 ) => {
   try {
     connectToDatabase();
@@ -32,7 +32,7 @@ export const getTopInteractedTags = async (
       { $unwind: '$tags' },
       { $group: { _id: '$tags', count: { $sum: 1 } } },
       { $sort: { count: -1 } },
-      { $limit: limit }
+      { $limit: limit },
     ]);
 
     // topTags
@@ -100,7 +100,7 @@ export const getAllTags = async (params: GetAllTagsParams) => {
 };
 
 export const getQuestionsByTagId = async (
-  params: GetQuestionsByTagIdParams
+  params: GetQuestionsByTagIdParams,
 ) => {
   try {
     connectToDatabase();
@@ -124,12 +124,12 @@ export const getQuestionsByTagId = async (
       options: {
         skip: skipAmount,
         limit: pageSize + 1,
-        sort: { createdAt: -1 }
+        sort: { createdAt: -1 },
       },
       populate: [
         { path: 'tags', model: Tag, select: '_id name' },
-        { path: 'author', model: User, select: '_id clerkId name picture' }
-      ]
+        { path: 'author', model: User, select: '_id clerkId name picture' },
+      ],
     });
 
     if (!tag) {
@@ -153,10 +153,10 @@ export const getTopPopularTags = async () => {
 
     const popularTags = await Tag.aggregate([
       {
-        $project: { name: 1, numberOfQuestions: { $size: '$questions' } }
+        $project: { name: 1, numberOfQuestions: { $size: '$questions' } },
       },
       { $sort: { numberOfQuestions: -1 } },
-      { $limit: 10 }
+      { $limit: 10 },
     ]);
 
     return popularTags;
@@ -164,4 +164,4 @@ export const getTopPopularTags = async () => {
     console.log(error);
     throw error;
   }
-};'
+};
