@@ -52,12 +52,12 @@ const config: Config = {
       },
       keyframes: {
         'accordion-down': {
-          from: { height: 0 },
-          to: { height: 'var(--radix-accordion-content-height)' },
+          from: { height: '0' }, // Height value provided as a string
+          to: { height: 'var(--radix-accordion-content-height)' }, // Height value provided as a string
         },
         'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: 0 },
+          from: { height: 'var(--radix-accordion-content-height)' }, // Height value provided as a string
+          to: { height: '0' }, // Height value provided as a string
         },
       },
       animation: {
