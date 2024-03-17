@@ -1,13 +1,13 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import NoResult from '@/components/shared/NoResult/NoResult';
-import QuestionCard from '@/components/cards/QuestionCard';
-import { getQuestions } from '@/lib/actions/question.action';
-import Filter from './../../../components/shared/Filters/Filters';
+// import NoResult from '@/components/shared/NoResult/NoResult';
+// import QuestionCard from '@/components/cards/QuestionCard';
+// import { getQuestions } from '@/lib/actions/question.action';
 import { HomePageFilters } from '@/constants/filters';
+import Filter from '@/components/shared/Filters/Filters';
 
 export default async function Home() {
-  const result = await getQuestions({});
+  // const result = await getQuestions({});
 
   // console.log('Home  result:', result.questions);
   return (
@@ -29,31 +29,6 @@ export default async function Home() {
       </div>
 
       {/* Card section */}
-      <div className="mt-10 flex flex-col gap-6">
-        {/*  //!Todo: looping through questions */}
-        {result.questions.length > 0 ? (
-          result.questions?.map((question) => (
-            <QuestionCard
-              key={question._id}
-              _id={question._id}
-              title={question.title}
-              tags={question.tags}
-              author={question.author}
-              upvotes={question.upvotes}
-              views={question.views}
-              answers={question.answers}
-              createdAt={question.createdAt}
-            />
-          ))
-        ) : (
-          <NoResult
-            title="There is no quesiton to show"
-            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
-            link="/ask-question"
-            linkTitle="Ask a Question"
-          />
-        )}
-      </div>
     </>
   );
 }
