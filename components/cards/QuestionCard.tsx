@@ -14,7 +14,7 @@ interface QuestionCardProps {
     _id: string;
     name: string;
     picture: string;
-  };
+  } | null; // Make author prop nullable
   upvotes: number;
   views: number;
   answers: Array<object>;
@@ -31,6 +31,10 @@ const QuestionCard = ({
   views,
   answers,
 }: QuestionCardProps) => {
+  // Ensure author object is not null before accessing its properties
+  const authorId = author && author._id;
+  const authorName = author ? author.name : 'Unknown';
+
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11 ">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -44,8 +48,6 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
-
-        {/* //Todo: if sign-in edit delete actions */}
       </div>
 
       <div className="mt-3.5 flex flex-wrap gap-2">
@@ -56,11 +58,10 @@ const QuestionCard = ({
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          href={`/profile/${author._id}`}
+          href={authorId ? `/profile/${authorId}` : '#'} // Handle null authorId
           imgUrl={'/assets/icons/avatar.svg'}
           alt="user"
-          value={author.name}
-          isAuthor
+          value={authorName} // Use the default value for author name
           title={`- asked ${getTimeStamp(createdAt)}`}
           textStyles="body-medium text-dark400_light700"
         />
