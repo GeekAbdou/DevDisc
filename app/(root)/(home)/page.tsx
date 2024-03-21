@@ -1,15 +1,51 @@
+import LocalSearchBar from '@/components/shared/search/LocalSearchBar';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { HomePageFilters } from '@/constants/filters';
+import Filter from '@/components/shared/Filters/Filters';
+import HomeFilters from '@/components/shared/Filters/HomeFilters';
 import NoResult from '@/components/shared/NoResult/NoResult';
 import QuestionCard from '@/components/cards/QuestionCard';
-import { getQuestions } from '@/lib/actions/question.action';
-import { HomePageFilters } from '@/constants/filters';
-import Filter from './../../../components/shared/Filters/Filters';
+import {
+  getQuestions,
+  getRecommendedQuestions,
+} from '@/lib/actions/question.action';
+import { SearchParamsProps } from '@/types';
+import type { Metadata } from 'next';
+import { auth } from '@clerk/nextjs';
 
-export default async function Home() {
-  const result = await getQuestions({});
+export const metadata: Metadata = {
+  title: 'Home | Div Discussion',
+  description: 'Home page of Div Discussion',
+};
 
-  // console.log('Home  result:', result.questions);
+export default async function Home({ searchParams }: SearchParamsProps) {
+  const { userId } = auth();
+  let result;
+
+  // ? fetch recomended questions
+
+  if (searchParams?.filter === 'recommended') {
+    if (userId) {
+      result = await getRecommendedQuestions({
+        userId,
+        searchQuery: searchParams?.q,
+        page: searchParams?.page ? +searchParams?.page : 1,
+      });
+    } else {
+      result = {
+        questions: [],
+        isNext: false,
+      };
+    }
+  } else {
+    result = await getQuestions({
+      searchQuery: searchParams?.q,
+      filter: searchParams?.filter,
+      page: searchParams?.page ? +searchParams?.page : 1,
+    });
+  }
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -21,6 +57,14 @@ export default async function Home() {
         </Link>
       </div>
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
+        <LocalSearchBar
+          route="/"
+          iconPosition="left"
+          imgSrc="/assets/icons/search.svg"
+          placeholder="Search for questions"
+          otherClasses="flex-1"
+        />
+
         <Filter
           filters={HomePageFilters}
           otherClasses="min-h-[56px] sm:min-w-[170px]"
@@ -28,10 +72,11 @@ export default async function Home() {
         />
       </div>
 
-      {/* Card section */}
+      <HomeFilters />
 
+      {/* Card section */}
       <div className="mt-10 flex flex-col gap-6">
-        {/*  //!Todo: looping through questions */}
+        {/*  looping through questions */}
         {result.questions.length > 0 ? (
           result.questions?.map((question) => (
             <QuestionCard
@@ -40,7 +85,7 @@ export default async function Home() {
               title={question.title}
               tags={question.tags}
               author={question.author}
-              upvotes={question.upvotes}
+              upvotes={question.upvotes.length}
               views={question.views}
               answers={question.answers}
               createdAt={question.createdAt}
@@ -55,6 +100,8 @@ export default async function Home() {
           />
         )}
       </div>
+
+      <div className="mt-10"></div>
     </>
   );
 }
