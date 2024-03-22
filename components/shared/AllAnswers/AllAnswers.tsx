@@ -22,13 +22,12 @@ const AllAnswers = async ({
   page,
   filter,
 }: Props) => {
-  const { answers, isNext } = await getAnswers({
+  const { answers } = await getAnswers({
     questionId,
     page: page ? +page : 1,
     sortBy: filter,
   });
 
-  const pageNumber = page ? +page : 1;
 
   return (
     <div className="mt-11">
@@ -80,8 +79,7 @@ const AllAnswers = async ({
           </article>
         ))}
       </div>
-      <div className="mt-10">
-      </div>
+      <div className="mt-10"></div>
     </div>
   );
 };

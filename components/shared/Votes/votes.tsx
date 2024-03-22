@@ -5,7 +5,7 @@ import { downVoteAnswer, upvoteAnswer } from '@/lib/actions/answer.action';
 import { viewQuestion } from '@/lib/actions/interaction.action';
 import {
   downVoteQuestion,
-  upvoteQuestion
+  upvoteQuestion,
 } from '@/lib/actions/question.action';
 import { toggleSaveQuestion } from '@/lib/actions/user.action';
 import { formatAndDivideNumber } from '@/lib/utils';
@@ -32,7 +32,7 @@ const Votes = ({
   hasupVoted,
   downvotes,
   hasdownVoted,
-  hasSaved
+  hasSaved,
 }: Props) => {
   const pathname = usePathname();
   const rounter = useRouter();
@@ -40,21 +40,21 @@ const Votes = ({
     await toggleSaveQuestion({
       questionId: JSON.parse(itemId),
       userId: JSON.parse(userId),
-      path: pathname
+      path: pathname,
     });
 
     return toast({
       title: `Question ${
         !hasSaved ? 'Saved in' : 'Removed from'
       } your collection`,
-      variant: !hasSaved ? 'default' : 'destructive'
+      variant: !hasSaved ? 'default' : 'destructive',
     });
   };
   const handleVote = async (action: string) => {
     if (!userId) {
       return toast({
         title: 'Please login first',
-        description: 'You need to login to perform this action'
+        description: 'You need to login to perform this action',
       });
     }
     if (action === 'upvote') {
@@ -64,7 +64,7 @@ const Votes = ({
           userId: JSON.parse(userId),
           hasupVoted,
           hasdownVoted,
-          path: pathname
+          path: pathname,
         });
       } else if (type === 'Answer') {
         await upvoteAnswer({
@@ -72,12 +72,12 @@ const Votes = ({
           userId: JSON.parse(userId),
           hasupVoted,
           hasdownVoted,
-          path: pathname
+          path: pathname,
         });
       }
       return toast({
         title: `Upvoted ${!hasupVoted ? 'Successful' : 'Removed'}`,
-        variant: !hasupVoted ? 'default' : 'destructive'
+        variant: !hasupVoted ? 'default' : 'destructive',
       });
     }
     // Downvote action
@@ -88,7 +88,7 @@ const Votes = ({
           userId: JSON.parse(userId),
           hasupVoted,
           hasdownVoted,
-          path: pathname
+          path: pathname,
         });
       } else if (type === 'Answer') {
         await downVoteAnswer({
@@ -96,12 +96,12 @@ const Votes = ({
           userId: JSON.parse(userId),
           hasupVoted,
           hasdownVoted,
-          path: pathname
+          path: pathname,
         });
       }
       return toast({
         title: `Downvoted ${!hasdownVoted ? 'Successful' : 'Removed'}`,
-        variant: !hasdownVoted ? 'default' : 'destructive'
+        variant: !hasdownVoted ? 'default' : 'destructive',
       });
     }
     // todo: show a toast message
@@ -111,7 +111,7 @@ const Votes = ({
   useEffect(() => {
     viewQuestion({
       questionId: JSON.parse(itemId),
-      userId: userId ? JSON.parse(userId) : undefined
+      userId: userId ? JSON.parse(userId) : undefined,
     });
   }, [itemId, userId, pathname, rounter]);
 
