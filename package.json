@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@types/node": "latest",
+    "@types/prismjs": "^1.26.3",
     "@types/react": "^18.2.66",
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
