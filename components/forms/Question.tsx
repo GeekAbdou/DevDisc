@@ -29,7 +29,6 @@ export default function Question({ mongoUserId }: QuestionProps) {
 
   const type: any = 'create';
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
   const pathname = usePathname();
 
   async function onSubmit(values: z.infer<typeof questionsSchema>) {
