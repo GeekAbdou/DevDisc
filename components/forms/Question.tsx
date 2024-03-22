@@ -11,7 +11,7 @@ import { QuestionEditor } from './QuestionEditor';
 import { QuestionTags } from './QuestionTags';
 import { useState } from 'react';
 import { createQuestion } from '@/lib/actions/question.action';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface QuestionProps {
   mongoUserId: string;
