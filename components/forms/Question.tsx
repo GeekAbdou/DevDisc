@@ -34,7 +34,7 @@ export default function Question({ mongoUserId }: QuestionProps) {
 
   async function onSubmit(values: z.infer<typeof questionsSchema>) {
     setIsSubmitting(true);
-    console.log(values);
+    console.log('Form values:', values);
 
     try {
       await createQuestion({
@@ -44,9 +44,10 @@ export default function Question({ mongoUserId }: QuestionProps) {
         author: JSON.parse(mongoUserId),
         path: pathname,
       });
-      router.push('/');
+      console.log('Question created successfully.');
+      // router.push('/');
     } catch (error) {
-      console.log('error:', error);
+      console.error('Error creating question:', error);
     } finally {
       setIsSubmitting(false);
     }

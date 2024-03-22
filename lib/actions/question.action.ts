@@ -80,8 +80,10 @@ export const createQuestion = async (params: CreateQuestionParams) => {
   // eslint-disable-next-line no-empty
   try {
     // connect to DATABASE
+    console.log('createQuestion DB CONNECTION');
     connectToDatabase();
     const { title, content, tags, author, path } = params;
+    console.log(params);
 
     // create a new question
     const question = await Question.create({
@@ -89,6 +91,8 @@ export const createQuestion = async (params: CreateQuestionParams) => {
       content,
       author,
     });
+
+    console.log(question);
 
     // tag documents array
     const tagDocuments = [];
@@ -333,9 +337,9 @@ export const getRecommendedQuestions = async (params: RecommededParams) => {
 
     // get distinct tag Ids for user interactions
 
-    const distinctUserTagIds: string[] = Array.from(
-      new Set(userTags.map((tag: { _id: string }) => tag._id)),
-    );
+    const distinctUserTagIds = [
+      ...new Set(userTags.map((tag: any) => tag._id)),
+    ];
 
     const query: FilterQuery<typeof Question> = {
       $and: [
