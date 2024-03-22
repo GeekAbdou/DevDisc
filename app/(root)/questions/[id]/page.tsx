@@ -9,7 +9,7 @@ import { formatAndDivideNumber, getTimeStamp } from '@/lib/utils';
 import { auth } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
-import Votes from '@/components/shared/Votes/Votes';
+import Votes from '@/components/shared/Votes/Votess';
 
 import type { Metadata } from 'next';
 

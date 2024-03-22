@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getTimeStamp } from '@/lib/utils';
 import ParseHTML from '../ParseHTML/ParseHTML';
-import Votes from '@/components/shared/Votes/Votes';
+import Votes from '@/components/shared/Votes/Votess';
 
 interface Props {
   questionId: string;
@@ -27,7 +27,6 @@ const AllAnswers = async ({
     page: page ? +page : 1,
     sortBy: filter,
   });
-
 
   return (
     <div className="mt-11">
