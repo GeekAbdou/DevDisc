@@ -11,7 +11,7 @@ import { QuestionEditor } from './QuestionEditor';
 import { QuestionTags } from './QuestionTags';
 import { useState } from 'react';
 import { createQuestion } from '@/lib/actions/question.action';
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface QuestionProps {
   mongoUserId: string;
@@ -29,6 +29,7 @@ export default function Question({ mongoUserId }: QuestionProps) {
 
   const type: any = 'create';
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
   const pathname = usePathname();
 
   async function onSubmit(values: z.infer<typeof questionsSchema>) {
@@ -43,7 +44,6 @@ export default function Question({ mongoUserId }: QuestionProps) {
         author: JSON.parse(mongoUserId),
         path: pathname,
       });
-      console.log('Question created successfully.');
       router.push('/');
     } catch (error) {
       console.error('Error creating question:', error);
