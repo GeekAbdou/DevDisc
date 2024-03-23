@@ -14,11 +14,12 @@ interface QuestionCardProps {
     _id: string;
     name: string;
     picture: string;
-  } | null; // Make author prop nullable
+  } | null;
   upvotes: number;
   views: number;
-  answers: Array<object>;
+  answers: object[];
   createdAt: Date;
+  clerkId?: string; // Make clerkId prop optional
 }
 
 const QuestionCard = ({

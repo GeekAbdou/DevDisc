@@ -61,7 +61,7 @@ const QuestionDetails = async ({
             </Link>
           )}
 
-          <div className="flex justify-end text-dark200_light900">
+          <div className="flex justify-end ">
             <Votes
               type="Question"
               itemId={JSON.stringify(question._id)}
