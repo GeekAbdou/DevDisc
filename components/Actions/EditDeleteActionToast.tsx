@@ -14,13 +14,23 @@ const EditDeleteActionToast = ({ type, itemId }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
   const handleEdit = () => {
-    router.push(`/question/edit/${JSON.parse(itemId)}`);
+    router.push(`/questions/edit/${JSON.parse(itemId)}`);
   };
   const handleDelete = async () => {
     if (type === 'Question') {
       // delete Question
-      await deleteQuestion({ questionId: JSON.parse(itemId), path: pathname });
+      try {
+        const parsedItemId = JSON.parse(itemId);
+        // Proceed with the rest of your code using parsedItemId
 
+        console.log('parsedItemId', parsedItemId);
+        console.log('pathname', pathname);
+
+        await deleteQuestion({ questionId: parsedItemId, path: pathname });
+      } catch (error) {
+        console.error('Error parsing itemId as JSON:', error);
+        // Handle the error appropriately, such as showing a message to the user or logging it
+      }
       toast({
         title: ` Question Deleted `,
         variant: 'destructive',

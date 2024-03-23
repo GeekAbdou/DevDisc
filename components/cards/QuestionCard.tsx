@@ -2,6 +2,8 @@ import Link from 'next/link';
 import RenderTag from '../shared/RightSidebar/RenderTag';
 import Metric from '../shared/Metric/Metric';
 import { formatAndDivideNumber, getTimeStamp } from '@/lib/utils';
+import { SignedIn } from '@clerk/nextjs';
+import EditDeleteActionToast from '@/components/Actions/EditDeleteActionToast';
 
 interface QuestionCardProps {
   _id: string;
@@ -12,18 +14,20 @@ interface QuestionCardProps {
   }[];
   author: {
     _id: string;
+    clerkId: string;
     name: string;
     picture: string;
-  } | null;
+  };
   upvotes: number;
   views: number;
-  answers: object[];
+  answers: Array<object>;
   createdAt: Date;
-  clerkId?: string | null; // Make clerkId prop optional
+  clerkId?: string | null;
 }
 
 const QuestionCard = ({
   _id,
+  clerkId,
   title,
   tags,
   author,
@@ -35,6 +39,7 @@ const QuestionCard = ({
   // Ensure author object is not null before accessing its properties
   const authorId = author && author._id;
   const authorName = author ? author.name : 'Unknown';
+  const showActionButtons = clerkId && clerkId === author.clerkId;
 
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11 ">
@@ -49,6 +54,18 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
+      </div>
+
+      <div>
+        {/* //Todo: if sign-in edit delete actions */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteActionToast
+              type="Question"
+              itemId={JSON.stringify(_id)}
+            />
+          )}
+        </SignedIn>
       </div>
 
       <div className="mt-3.5 flex flex-wrap gap-2">
