@@ -1,31 +1,21 @@
 import QuestionCard from '@/components/cards/QuestionCard';
 import { getUserQuestions } from '@/lib/actions/user.action';
-import { useEffect, useState } from 'react';
 
 interface QuestionTabProps {
   userId: string;
-  clerkId?: string | null;
+  clerkId?: string | undefined;
   searchProps?: { [key: string]: string | undefined };
 }
 
-const QuestionTab = ({ searchProps, userId, clerkId }: QuestionTabProps) => {
-  const [userQuestions, setUserQuestions] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchUserQuestions = async () => {
-      try {
-        const { userQuestions: fetchedUserQuestions } = await getUserQuestions({
-          userId,
-          page: searchProps?.page ? +searchProps.page : 1,
-        });
-        setUserQuestions(fetchedUserQuestions);
-      } catch (error) {
-        console.error('Error fetching user questions:', error);
-      }
-    };
-
-    fetchUserQuestions();
-  }, [userId, searchProps?.page]);
+const QuestionTab = async ({
+  searchProps,
+  userId,
+  clerkId,
+}: QuestionTabProps) => {
+  const { userQuestions } = await getUserQuestions({
+    userId,
+    page: searchProps?.page ? +searchProps.page : 1,
+  });
 
   return (
     <>
@@ -33,7 +23,7 @@ const QuestionTab = ({ searchProps, userId, clerkId }: QuestionTabProps) => {
         <QuestionCard
           key={question._id}
           _id={question._id}
-          clerkId={clerkId || undefined} // Pass undefined if clerkId is null
+          clerkId={clerkId}
           title={question.title}
           tags={question.tags}
           author={question.author}
@@ -46,5 +36,4 @@ const QuestionTab = ({ searchProps, userId, clerkId }: QuestionTabProps) => {
     </>
   );
 };
-
 export default QuestionTab;
