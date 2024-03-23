@@ -15,6 +15,7 @@ export const connectToDatabase = async () => {
     await mongoose.connect(process.env.MONGODB_URI, {
       dbName: 'devdisc',
     });
+
     isConnected = true;
     console.log('DB_Connected');
   } catch (error) {

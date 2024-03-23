@@ -28,6 +28,8 @@ const AllAnswers = async ({
     sortBy: filter,
   });
 
+  console.log(answers);
+
   return (
     <div className="mt-11">
       <div className="flex items-center justify-between">
@@ -38,7 +40,7 @@ const AllAnswers = async ({
       {/* Dispay answers */}
       <div>
         {answers.map((answer) => (
-          <article key={answer._id} className="light-border border-b py-10">
+          <article key={answer._id} className="text-dark200_light900">
             {/* SPAN ID */}
             <div className="mb-8 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
               <Link

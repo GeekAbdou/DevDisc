@@ -38,6 +38,7 @@ const ParseHTML = ({ data }: Props) => {
 
   return (
     <div
+      className="text-dark200_light900"
       style={{
         maxWidth: '100%',
         whiteSpace: 'normal',

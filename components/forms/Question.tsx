@@ -44,7 +44,7 @@ export default function Question({ mongoUserId }: QuestionProps) {
         path: pathname,
       });
       console.log('Question created successfully.');
-      // router.push('/');
+      router.push('/');
     } catch (error) {
       console.error('Error creating question:', error);
     } finally {
