@@ -3,7 +3,7 @@ import { getUserQuestions } from '@/lib/actions/user.action';
 
 interface QuestionTabProps {
   userId: string;
-  clerkId?: string | undefined;
+  clerkId?: string | null;
   searchProps?: { [key: string]: string | undefined };
 }
 

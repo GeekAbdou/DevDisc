@@ -19,7 +19,7 @@ interface QuestionCardProps {
   views: number;
   answers: object[];
   createdAt: Date;
-  clerkId?: string; // Make clerkId prop optional
+  clerkId?: string | null; // Make clerkId prop optional
 }
 
 const QuestionCard = ({
